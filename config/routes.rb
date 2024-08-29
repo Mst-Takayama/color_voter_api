@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'up' => 'rails/health#show', as: :rails_health_check
 
   resources :votes, only: %i[new create]
+  get 'votes/result' => 'votes#result'
   # Defines the root path route ("/")
   # root "posts#index"
 end

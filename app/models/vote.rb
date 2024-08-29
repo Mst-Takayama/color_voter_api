@@ -2,6 +2,6 @@ class Vote < ApplicationRecord
   belongs_to :dress
 
   def dress_color
-    self.dress.name
+    dress.name
   end
 end
