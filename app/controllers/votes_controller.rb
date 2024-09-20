@@ -6,19 +6,12 @@ class VotesController < ApplicationController
   def result
     token = request.headers['X-User-Token']
     @vote = Vote.find_by(user_token: token)
-    if @vote.present?
-      render json: { id: @vote.id, voted_dress: @vote.dress_color, voted_count: @vote.dress.voted_count, odds: @vote.dress.odds },
-             status: 200
-    else
-      render json: { error: 'No vote found' }, status: 404
-    end
+    render json: { error: '投票が見つかりません' }, status: 404 if @vote.blank?
   end
 
   def create
     token = request.headers['X-User-Token']
-    if Vote.find_by(user_token: token).present?
-      return render json: { error: 'You have already voted' }, status: :conflict
-    end
+    return render json: { error: 'すでに投票済みです' }, status: :conflict if Vote.find_by(user_token: token).present?
 
     @vote = Vote.new(vote_params)
     if @vote.save
@@ -35,7 +28,7 @@ class VotesController < ApplicationController
     vote = Vote.find_by(user_token: token)
     return unless vote.present?
 
-    render json: { error: 'You have already voted' }, status: :conflict
+    render json: { error: 'すでに投票済みです' }, status: :conflict
   end
 
   def vote_params
