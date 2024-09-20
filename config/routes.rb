@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get 'votes/result' => 'votes#result'
   # Defines the root path route ("/")
   # root "posts#index"
+  get 'lotteries' => 'lotteries#index'
 end
